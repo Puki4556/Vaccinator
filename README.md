@@ -17,3 +17,4 @@ Mostly if the malware detects one of the above it will be suspended or closed or
 # Current status
 currently the main Vaccinator script is not done yet.  
 The VaccOnOff Is used to detect a kind of malwares ends/suspends their process when they detect a forensics process running.
+https://github.com/maorlevi25/Vaccinator/blob/master/VaccOnOff/README.md
