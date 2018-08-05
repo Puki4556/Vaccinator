@@ -1,7 +1,7 @@
 # Vaccinator
 
 ## Prologue
-For the last six years I have been working in cyber security.
+For the last six years I have been working in cyber security. \n
 I am tired to be always behind the attackers.
 This tool is supposed to prevent some of the malwares to even run in my organistration.
 This tool is supposed to vaccinate the workstation.
