@@ -1,10 +1,14 @@
 ﻿
+####################### Stuff you need to change ###########################
 # get the list of computers
 $comps = Get-Content "C:\comps.txt"
 
 # !!!!!! This value must be identical to the value in the Task_creater script !!!!!!!
 $TaskDescr = "onoff"
 
+# Path to the VaccOnOff script
+$ps1Path = "C:\path\to\script\task_creater_VaccOnOff.ps1"
+###########################################################################
 foreach($comp in $comps)
 {
     #$comp = $comp.name
@@ -17,7 +21,7 @@ foreach($comp in $comps)
 
         # execute the script on the other computer
         # the script creates a task
-        Invoke-Command -ComputerName $comp -FilePath "C:\path\to\script\task_creater_vaccinator.ps1" >> $null
+        Invoke-Command -ComputerName $comp -FilePath $ps1Path >> $null
         sleep -Seconds 1
 
         # run the task
