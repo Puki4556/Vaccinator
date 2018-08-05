@@ -1,6 +1,6 @@
 ## VaccOnOff
 
-![teamwork-flip](https://media.giphy.com/media/J2xkAW1E8kvyE/giphy.gif)
+![gif](https://media.giphy.com/media/ncve7z4oPPURO/source.gif)
 
 
 This script is supposed to detect malware that attempts to hide from forensic tools.  
