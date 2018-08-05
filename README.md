@@ -7,8 +7,8 @@ This tool is supposed to prevent some of the malwares to even run in my organist
 This tool is supposed to vaccinate the workstation.  
 
 ## About the project
-This project supposed to vaccinate your workstation from malware's.
-In an attempt to evade analysis and being detected, malware often detects:
+This project supposed to vaccinate your workstation from malware's.  
+In an attempt to evade analysis and being detected, malware often detects:  
 1) The presence of a forensic process running
 2) The presence of VM Indicators.
 3) The presence of Snadbox Indicators.
