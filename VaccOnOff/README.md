@@ -8,7 +8,7 @@ A list of processes name process names is available at: https://github.com/DuckI
 Change the name of the exe to the names on the list (or use your own names).  
 Pull all the exe files you want in a folder  
 
-Written by MaorLevi25  
+Written by DuckInCyber  
 Date 31/7/18  
 Version 0.0.1  
 
