@@ -23,8 +23,8 @@ Deploy_VaccOnOff_With_Tasksq.ps1 - the deployer.
 1) Ports 445 and 135 from the deployer station to the endpoints.
 2) A network share for the input and output. This share need to have 3 folders:  
 2.1) Tools - You need a network path with read permissions for "Everyone" or "Domain Computers".  
-    In this folder you need to have all the executable files that will run on the endpoint.  
+        In this folder you need to have all the executable files that will run on the endpoint.  
 2.2) Input - You need a network path with read permissions for "Everyone" or "Domain Computers".  
-    In this folder you need to have the VaccOnOff.ps1 file (copy the script to the path when you activates the script and delete it from there later).  
+        In this folder you need to have the VaccOnOff.ps1 file (copy the script to the path when you activates the script and delete it from there later).  
 2.3) Output - You need a network path with full control permissions for "Everyone" or "Domain Computers".  
-    Result output path.
+        Result output path.
