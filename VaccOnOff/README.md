@@ -34,3 +34,5 @@ Deploy_VaccOnOff_With_Tasksq.ps1 - the deployer.
 # Please Read The Scripts
 Every variable you will need to change is marked in a section that start with:  
 ####################### Stuff you need to change ###########################
+
+Change this variables with yours values
