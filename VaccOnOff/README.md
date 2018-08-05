@@ -1,9 +1,11 @@
-## VaccOnOff
+# VaccOnOff
 
 ![gif](https://media.giphy.com/media/ncve7z4oPPURO/source.gif)
 
-### This script don't meant to prevent, it meant to detect
+### This script don't meant to prevent, it meant to detect  
+It starts the Vacc on and then off ;)
 
+## The purpose
 This script is supposed to detect malware that attempts to hide from forensic tools.  
 This kind of malwares ends/suspends their process when they detect a forensics process running  
 There are another things except detectingprocesses, but.... next version (-; .  
@@ -16,14 +18,14 @@ Written by DuckInCyber
 Date 31/7/18  
 Version 0.0.1  
 
-# How it works
+## How it works
 This tool have a deployer scripts (Deploy_VaccOnOff_With_Tasksq.ps1 and Task_Creater_VaccOnOff.ps1) and a deployed script (VaccOnOff.ps1).  
 In my experience, the best way to run a ps1 script on a remote computer is to create a schedule task on the computer and remotly activate it.  
 Task_Creater_VaccOnOff.ps1 - creating the schedule task that will run the VaccOnOff.ps1 from a network share.  
 VaccOnOff.ps1 - this script will run on the endpoints. 
 Deploy_VaccOnOff_With_Tasksq.ps1 - the deployer.
 
-# What you need?
+## What you need?
 1) Ports 445 and 135 from the deployer station to the endpoints.
 2) A network share for the input and output. This share need to have 3 folders:  
 2.1) Tools - You need a network path with read permissions for "Everyone" or "Domain Computers".  
