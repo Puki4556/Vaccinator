@@ -30,3 +30,7 @@ Deploy_VaccOnOff_With_Tasksq.ps1 - the deployer.
         Result output path.
 3) A domain user or group that will have permissions to read the output.
 4) A client local admin user to run the deployer.ps1 with his permissions, you can use a Domain admin.
+
+# Please Read The Scripts
+Every variable you will need to change is marked in a section that start with:  
+####################### Stuff you need to change ###########################
