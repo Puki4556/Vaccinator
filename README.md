@@ -1,7 +1,7 @@
 # Vaccinator
 
 ## Prologue
-For the last six years I have been working in cyber security.  
+I have been working in cyber security from 2012.  
 I am tired to be always behind the attackers.  
 This tool is supposed to prevent some of the malwares to even run in my organistration.  
 This tool is supposed to vaccinate the workstation.  
@@ -14,3 +14,6 @@ In an attempt to evade analysis and being detected, malware often detects:
 3) The presence of Snadbox Indicators.
 Mostly if the malware detects one of the above it will be suspended or closed or "act natural" (Do only legitimate stuff) so it won't be detected.
 
+# Current status
+currently the main Vaccinator script is not done yet.  
+The VaccOnOff Is used to detect a kind of malwares ends/suspends their process when they detect a forensics process running.
