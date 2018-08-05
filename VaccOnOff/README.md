@@ -28,3 +28,5 @@ Deploy_VaccOnOff_With_Tasksq.ps1 - the deployer.
         In this folder you need to have the VaccOnOff.ps1 file (copy the script to the path when you activates the script and delete it from there later).  
 2.3) Output - You need a network path with full control permissions for "Everyone" or "Domain Computers".  
         Result output path.
+3) A domain user or group that will have permissions to read the output.
+4) A client local admin user to run the deployer.ps1 with his permissions, you can use a Domain admin.
