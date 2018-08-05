@@ -2,6 +2,7 @@
 
 ![Alt Text](https://media.giphy.com/media/J2xkAW1E8kvyE/giphy.gif)
 
+
 This script is supposed to detect malware that attempts to hide from forensic tools.  
 This kind of malwares ends/suspends their process when they detect a forensics process running  
 There are another things except detectingprocesses, but.... next version (-; .  
