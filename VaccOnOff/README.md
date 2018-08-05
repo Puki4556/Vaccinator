@@ -2,6 +2,7 @@
 
 ![gif](https://media.giphy.com/media/ncve7z4oPPURO/source.gif)
 
+### This script don't meant to prevent, it meant to detect
 
 This script is supposed to detect malware that attempts to hide from forensic tools.  
 This kind of malwares ends/suspends their process when they detect a forensics process running  
