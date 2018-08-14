@@ -14,6 +14,10 @@ In an attempt to evade analysis and being detected, malware often scans for:
 3) The presence of Sandbox Indicators.
 Mostly if the malware detects one of the above it will change it's behaviour: suspended/closed/'act naturally' (Do only legitimate stuff) so it won't be detected.
 
+# VaccOnOff
+Tool for detection
+https://github.com/DuckInCyber/Vaccinator/tree/master/VaccOnOff
+
 # Current status
 currently the main Vaccinator script is not done yet.  
 The VaccOnOff Is used to detect a kind of malwares ends/suspends their process when they detect a forensics process running.
