@@ -118,14 +118,10 @@ $result = $instanceBinding.Put()
 $newBinding = $result.Path
 
 
-## Collecting all the process ids
-$ids = @()
-
 ## Starting the process
 foreach ($proc in $proc_files)
 {
-$id = Start-Process $proc -WindowStyle Hidden -PassThru
-$ids += $id.Id
+Start-Process $proc -WindowStyle Hidden
 sleep -Milliseconds $sleep
 }
 
@@ -139,9 +135,10 @@ $suspend_at_end = get-suspended
 sleep -Seconds 2
 
 ## Stopping the processes
-foreach ($id in $ids)
+$processes = Get-Process | select id,path | ?{$_.path -like "$local_path*"}
+foreach ($process  in $processes )
 {
-Stop-Process -Id $id
+Stop-Process -Id $process.Id
 }
 
 ## Get the difference of the suspened processes
