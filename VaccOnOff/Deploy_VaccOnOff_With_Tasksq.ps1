@@ -6,7 +6,7 @@ $comps = Get-Content "C:\comps.txt"
 # !!!!!! This value must be identical to the value in the Task_creater script !!!!!!!
 $TaskDescr = "onoff"
 
-# Path to the VaccOnOff_Deployer script
+# Path to the task_creater_VaccOnOff.ps1 script
 $ps1Path = "C:\path\to\script\task_creater_VaccOnOff.ps1"
 ###########################################################################
 foreach($comp in $comps)
