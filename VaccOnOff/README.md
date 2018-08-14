@@ -25,7 +25,7 @@ Task_Creater_VaccOnOff.ps1 - creating the schedule task that will run the VaccOn
 VaccOnOff.ps1 - this script will run on the endpoints. 
 Deploy_VaccOnOff_With_Tasksq.ps1 - the deployer.
 
-## what the VaccOnOff.ps1 does
+## What the VaccOnOff.ps1 does
 By the order:  
 1) Getting the suspended process so I will be able to find the new suspended processes.  
 2) Create a listener to closing processes.  
