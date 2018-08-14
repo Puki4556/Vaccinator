@@ -15,7 +15,7 @@ In an attempt to evade analysis and being detected, malware often scans for:
 Mostly if the malware detects one of the above it will change it's behaviour: suspended/closed/'act naturally' (Do only legitimate stuff) so it won't be detected.
 
 # VaccOnOff
-A tool that detect a kind of malwares ends/suspends their process when they detect a forensics process running.  
+A tool that detects a kind of malwares ends/suspends their process when they detect a forensics process running.  
 https://github.com/DuckInCyber/Vaccinator/tree/master/VaccOnOff
 
 # Current status
