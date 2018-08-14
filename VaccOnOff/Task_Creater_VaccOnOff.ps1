@@ -5,11 +5,11 @@
 ####################### Stuff you need to change ###########################
 ## Task name
 ## Change the name!!!!!
-$TaskName = "vacc"
+# !!!!!! This value must be identical to the value in the deployer script !!!!!!!
+$TaskName = "onoff"
 
 # The description of the task
-# !!!!!! This value must be identical to the value in the deployer script !!!!!!!
-$TaskDescr = "onoff"
+$TaskDescr = $TaskName
 
 #the network path to the script
 $TaskScript = "\\net_share\folder_with_everyone_read_permission\vaccinator.ps1"
