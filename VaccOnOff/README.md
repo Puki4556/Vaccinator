@@ -25,6 +25,17 @@ Task_Creater_VaccOnOff.ps1 - creating the schedule task that will run the VaccOn
 VaccOnOff.ps1 - this script will run on the endpoints. 
 Deploy_VaccOnOff_With_Tasksq.ps1 - the deployer.
 
+## what the VaccOnOff.ps1 does
+By the order:  
+1) Getting the suspended process so I will be able to find the new suspended processes.  
+2) Create a listener to closing processes.  
+3) Starting the forensics-related processes.  
+4) Getting the suspended process so I will be able to find the new suspended processes.  
+5) Stopping the forensics-related processes.  
+6) Moving log (Closed processes log) files to the output folder.  
+7) Exporting the difference of the suspened processes.  
+8) Changing the permissions on the output folder (This is very important because you don't want the "EVERYONE" will have full access to this files. you don't want the attacker to be able to change this files or watch then and know we got him).  
+
 ## What you need?
 1) Ports 445 and 135 from the deployer station to the endpoints.
 2) A network share for the input and output. This share need to have 3 folders:  
