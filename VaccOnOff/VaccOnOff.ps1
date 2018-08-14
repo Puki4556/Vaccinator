@@ -84,6 +84,8 @@ return $list
 
 ## Getting the suspended process so I will be able to find the new suspended processes.
 $suspend_at_start = get-suspended
+$suspend_at_start_info = $processes = Get-WmiObject win32_process # wmi - because I want the commandline
+
 
 ## Listenning to closing processes
 # Collect processes that terminated
@@ -142,24 +144,25 @@ foreach ($process  in $processes )
 Stop-Process -Id $process.Id
 }
 
-## Get the difference of the suspened processes
-$diff = Compare-Object $suspend_at_start $suspend_at_end -Property name,id,path
-
 ## Exporting
 $folder_name = ($env:COMPUTERNAME + "_" + (get-date -Format s)).replace(':','_')
 mkdir "$path\$folder_name"
-
+sleep -Seconds 1
 ## I like to use "~" as a delimiter. I find it easier to use in the Logstash
 ## Moving log files to the output folder
 Move-Item $file_path -Destination "$path\$folder_name"
+
+## Get the difference of the suspened processes
+$diff = Compare-Object $suspend_at_end $suspend_at_start -Property name,id,path | ?{$_.SideIndicator -eq "<="}
 
 ## Exporting the difference of the suspened processes
 ## I am using out-file and not export-csv because I don't want the headers.
 foreach ($dif in $diff)
 {
-    ($dif.name +"~"+ $dif.id +"~"+ $dif.path +"~"+ $env:COMPUTERNAME) | Out-File "$path\$folder_name\diff.csv" -Encoding UTF8 -Append
+    $suspended_info = $suspend_at_start_info | ?{$_.handle -eq $dif.id}
+    ($suspended_info.name +"~"+ $suspended_info.handle +"~"+ $suspended_info.ExecutablePath +"~"+ $suspended_info.CommandLine +"~"+ $env:COMPUTERNAME) | Out-File "$path\$folder_name\diff.csv" -Encoding UTF8 -Append
 }
-
+$Error | Out-File "$path\$folder_name\errors.txt" -Encoding UTF8 -Append
 
 ## Changing the permissions on the folder.
 ## This is very important because you don't want the "EVERYONE" will have full access to this files. you don't want the attacker to be able to change this files or watch then and know we got him
