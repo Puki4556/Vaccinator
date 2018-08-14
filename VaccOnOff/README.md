@@ -8,7 +8,7 @@ It starts the Vacc on and then off ;)
 ## The purpose
 This script is supposed to detect malware that attempts to hide from forensic tools.  
 This kind of malwares ends/suspends their process when they detect a forensics-related process running  
-This kind of malwares detect other things like registry keys, I will cover it in the next version.  
+Evasive malware can look for other indicators than ptocesses (i.e. registry keys), but this will be covered in the next version.  
 A list of processes name process names is available at: https://github.com/DuckInCyber/Vaccinator  
 
 Change the name of the exe to the names on the list (or use your own names).  
