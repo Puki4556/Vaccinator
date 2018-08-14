@@ -23,7 +23,7 @@
 
 ## Result output path
 ## You need a network path with full control permissions for Everyone or Domain Computers
-$path = "\\mail-01\Data_collection\output"
+$path = "\\net_share\folder_with_everyone_FullControl_permission\output"
 
 ## You better change it to something else
 $file_path = "c:\stopped.csv"
