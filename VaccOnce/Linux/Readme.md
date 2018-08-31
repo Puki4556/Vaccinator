@@ -2,6 +2,11 @@
 # Linux-Vaccinator
 <pre>
 Vaccinator for Linux systems, spoofing the system to look like a VmWare vm
+Dependencies:
+Please install the followings with "pip install" before running this script:
+ - psutil
+ - spoofmac
+
 
 How to use:
 
