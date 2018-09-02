@@ -76,8 +76,18 @@ foreach ($file in $files_to_create)
 {
     if (!(test-path $file))
     {
-        $file | Out-File -FilePath $file -Force
-        $log += ("file" + "," + "$file")
+        $folder = $file.Substring(0,($file.LastIndexOf('\')))
+        if(test-path $folder)
+        {
+            $file | Out-File -FilePath $file -Force
+            $log += ("file" + "," + "$file")
+        }
+        else
+        {
+            new-item -path $folder -ItemType Directory
+            $file | Out-File -FilePath $file -Force
+            $log += ("file" + "," + "$file")
+        }
     }
 }
 
