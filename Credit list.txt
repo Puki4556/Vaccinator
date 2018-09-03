@@ -1,0 +1,13 @@
+https://github.com/hfiref0x/VBoxHardenedLoader
+
+https://github.com/nsmfoo/antivmdetection
+
+https://www.cyberbit.com/blog/endpoint-security/anti-vm-and-anti-sandbox-explained/
+
+https://github.com/LordNoteworthy/al-khaser
+
+https://securelist.com/to-crypt-or-to-mine-that-is-the-question/86307/
+
+https://github.com/a0rtega/pafish
+
+https://github.com/cuckoosandbox/community/tree/master/modules/signatures
