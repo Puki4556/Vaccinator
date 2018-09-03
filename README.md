@@ -20,3 +20,4 @@ https://github.com/DuckInCyber/Vaccinator/tree/master/VaccOnOff
 
 # VaccOnce
 In this part of the project we are building a tool which will run once on the computer and will make the machine look like a sandbox analysis guest machine so malware will detect it and “choose” not to operate.
+https://github.com/DuckInCyber/Vaccinator/blob/master/VaccOnce/Readme.md
