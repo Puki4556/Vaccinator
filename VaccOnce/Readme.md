@@ -5,7 +5,7 @@ In this part of the project we are building a tool which will run once on the co
 There is a version for Ubuntu (written by Dor Alt) and a version for Windows (written by me).
 
 ## Prologue.
-When you install and configure a sandbox (I am used to work with Cuckoo) you are setting up an analysis guest machine that samples the behavior of a file. One of the most important things you need to do is making the analysis guest machine that sample the behavior of the file not to look like an analysis guest machine that sample the behavior of the file.
+When you install and configure a sandbox (I am used to work with Cuckoo) you are setting up an analysis guest machine that samples the behavior of a file. One of the most important things you need to do is making the analysis guest machine that sample the behavior of the file to look like a legit, real-life machine.
 Why is that? 
 Because a malware doesn't want to be discovered, once someone identifies it as a malware, the chance of successfully attacking and further distributing is dropped significantly.
 One of the main things that can detect a malware is a sandbox, therefore, If it classifies the computer as a sandbox or virtual it will probably shutdown itself or act legitimately.
