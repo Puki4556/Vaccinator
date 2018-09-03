@@ -18,7 +18,5 @@ Mostly if the malware detects one of the above it will change it's behaviour: su
 A tool that detects a kind of malwares ends/suspends their process when they detect a forensics process running.  
 https://github.com/DuckInCyber/Vaccinator/tree/master/VaccOnOff
 
-# Current status
-currently the main Vaccinator script is not done yet.  
-The VaccOnOff Is used to detect a kind of malwares ends/suspends their process when they detect a forensics process running.
-https://github.com/DuckInCyber/Vaccinator/blob/master/VaccOnOff/README.md
+# VaccOnce
+In this part of the project we are building a tool which will run once on the computer and will make the machine look like a sandbox analysis guest machine so malware will detect it and “choose” not to operate.
