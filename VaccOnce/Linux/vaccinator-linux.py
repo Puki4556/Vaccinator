@@ -18,7 +18,6 @@ Usage: python vaccinator-linux.py -s
 
 '''
 
-
 import os
 from vm_service_template import vm_service
 import psutil
@@ -27,6 +26,7 @@ import zipfile
 import spoofmac
 from optparse import OptionParser
 import logging
+import platform
 
 
 # Checking if sudo
@@ -41,9 +41,11 @@ except Exception, e:
 
 print "* Root confirmed *"
 
+arch = platform.architecture()[0]
 
 # Init for logger
 current_dir = os.getcwd()
+bin_dir = current_dir + os.sep + "bin"
 if not os.path.exists(current_dir + os.sep + "logs"):
     os.mkdir(current_dir + os.sep + "logs")
 logger = logging.getLogger(__name__)
@@ -76,7 +78,7 @@ def parse_command_line_arguments():
 
 
 def spoof_mac_addresses():
-    print_and_log("* spoofing mac address *", "info")
+    print_and_log("* trying to spoof mac address *", "info")
     interfaces_gen = spoofmac.find_interfaces()
     found_interfaces = []
     for interface in interfaces_gen:
@@ -125,13 +127,14 @@ def get_pids(running_processes):
     return pids
 
 
-def create_paths():
-    print_and_log("* creating vmware paths and running processes *", "info")
-    running_processes = []
-    bin_dir = current_dir + os.sep + "bin"
-
+def unzip_bin():
     with zipfile.ZipFile("bin.zip", "r") as zip:
         zip.extractall("bin")
+
+
+def create_paths_and_run_processes():
+    print_and_log("* trying to create vmware paths and to run processes *", "info")
+    running_processes = []
 
     # Giving permissions
     for file in os.listdir(bin_dir):
@@ -167,8 +170,8 @@ def create_paths():
         os.system("nohup /usr/lib/vmware-tools/sbin64/vmtoolsd &")
         running_processes.append("vmtoolsd")
 
-    if not os.path.exists("/usr/lib/vmware-tools/bin64"):
-        os.makedirs("/usr/lib/vmware-tools/bin64")
+    if not os.path.exists("/usr/lib/vmware-tools/"):
+        os.makedirs("/usr/lib/vmware-tools/")
 
     if not os.path.exists("/lib/modules/4.15.0-29-generic/kernel/drivers/gpu/drm/vmwgfx"):
         os.makedirs("/lib/modules/4.15.0-29-generic/kernel/drivers/gpu/drm/vmwgfx")
@@ -191,7 +194,7 @@ def create_paths():
 
 
 def remove_paths():
-    print_and_log("* removing vmware paths *", "info")
+    print_and_log("* trying to remove vmware paths *", "info")
     if os.path.exists("/usr/sbin/vmware-vmblock-fuse"):
         os.remove("/usr/sbin/vmware-vmblock-fuse")
     if os.path.exists("/usr/sbin/vmtoolsd"):
@@ -234,19 +237,6 @@ def remove_services():
     print_and_log("* vmware services were removed successfully *", "info")
 
 
-# def check_sudo():
-#     print "* Checking if running as root... *"
-#     try:
-#         with open("/etc/init.d/test.txt", "w") as file:
-#             file.write("")
-#     except Exception, e:
-#         if e.args[1] == 'Permission denied':
-#             print "Please run this program as root", "error"
-#             raise Exception("Please run this program as root")
-#
-#     print "* Root confirmed *"
-
-
 def print_and_log(log_line, level):
     print log_line
     if level == "info":
@@ -266,19 +256,76 @@ def kill_processes():
     print_and_log("* processes " + " ".join(pids) + " were killed *", "info")
 
 
+def spoof_dmidecode():
+    try:
+        print_and_log("* trying to replace dmidecode *", "info")
+        os.system("mv /usr/sbin/dmidecode /usr/sbin/dmidecode_org")
+        if os.path.exists("/usr/sbin/dmidecode_org"):
+            if arch == "32bit":
+                shutil.copy(bin_dir + os.sep + "dmidecode_32", "/usr/sbin/dmidecode")
+            else:
+                shutil.copy(bin_dir + os.sep + "dmidecode_64", "/usr/sbin/dmidecode")
+
+        print_and_log("* dmidecode was replaced successfully *", "info")
+    except Exception, e:
+        print_and_log("* failed to replace dmidecode. Error was: " + str(e) + " *", "error")
+
+
+def revert_to_original_dmidecode():
+    try:
+        print_and_log("* trying to revert back to original dmidecode *", "info")
+        if os.path.exists("/usr/sbin/dmidecode_org"):
+            os.system("mv /usr/sbin/dmidecode_org /usr/sbin/dmidecode")
+
+        print_and_log("* dmidecode was reverted to original successfully *", "info")
+    except Exception, e:
+        print_and_log("* failed to revert dmidecode back to original. Error was: " + str(e) + " *", "error")
+
+
+def spoof_lscpu():
+    try:
+        print_and_log("* trying to replace lscpu *", "info")
+        os.system("mv /usr/sbin/lscpu /usr/sbin/lscpu_org")
+        if os.path.exists("/usr/sbin/lscpu_org"):
+            if arch == "32bit":
+                shutil.copy(bin_dir + os.sep + "lscpu_32", "/usr/sbin/lscpu")
+            else:
+                shutil.copy(bin_dir + os.sep + "lscpu_64", "/usr/sbin/lscpu")
+
+        print_and_log("* lscpu was replaced successfully *", "info")
+    except Exception, e:
+        print_and_log("* failed to replace lscpu. Error was: " + str(e) + " *", "error")
+
+
+
+def revert_to_original_lscpu():
+    try:
+        print_and_log("* trying to revert back to original lscpu *", "info")
+        if os.path.exists("/usr/sbin/lscpu_org"):
+            os.system("mv /usr/sbin/lscpu_org /usr/sbin/lscpu")
+
+        print_and_log("* lscpu was reverted to original successfully *", "info")
+    except Exception, e:
+        print_and_log("* failed to revert lscpu back to original. Error was: " + str(e) + " *", "error")
+
+
+
+
 if __name__ == "__main__":
     operation = parse_command_line_arguments()
 
     if operation == "start":
         print_and_log("* starting vaccination process *", "info")
         try:
+            unzip_bin()
             spoof_mac_addresses()
-            create_paths()
+            create_paths_and_run_processes()
             create_services()
+            spoof_dmidecode()
+            spoof_lscpu()
+            print_and_log("* finished vaccination process *", "info")
         except Exception, e:
             print_and_log("* Error occurred: " + str(e) + " *", "error")
-
-        print_and_log("* finished vaccination process *", "info")
 
     else:
         print_and_log( "* reverting vaccination process *", "info")
@@ -287,8 +334,8 @@ if __name__ == "__main__":
             remove_services()
             remove_paths()
             revert_mac_addresses()
+            revert_to_original_dmidecode()
+            revert_to_original_lscpu()
+            print_and_log("* finished reverting vaccination process *", "info")
         except Exception, e:
             print_and_log("* Error occurred: " + str(e) + " *", "error")
-        print_and_log("* finished reverting vaccination process *", "info")
-
-
