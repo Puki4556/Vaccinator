@@ -11,6 +11,7 @@ How to use:
 
 -s start             start the linux vaccination process
 -k kill              kill and revert the vaccination process
+-l spoof_hw          optional - spoof lscpu and dmidecode outputs to look like this machine is a vm
 
 
 Usage: python vaccinator-linux.py -s
@@ -63,6 +64,7 @@ def parse_command_line_arguments():
     parser = OptionParser("usage: %prog -s")
     parser.add_option("-s", "--start", dest="start", action="store_true", help="start the linux vaccination process")
     parser.add_option("-k", "--kill", dest="kill", action="store_true", help="kill and revert the vaccination process")
+    parser.add_option("-l", "--spoof_hw", dest="spoof_hw", action="store_true", help="optional - spoof lscpu and dmidecode outputs to look like this machine is a vm")
     (options, args) = parser.parse_args()
 
     if options.start and options.kill:
@@ -72,9 +74,9 @@ def parse_command_line_arguments():
         parser.error("You must select either -s or -k flags")
 
     if options.start:
-        return "start"
+        return "start", options.spoof_hw
     else:
-        return "kill"
+        return "kill", options.spoof_hw
 
 
 def spoof_mac_addresses():
@@ -312,7 +314,7 @@ def revert_to_original_lscpu():
 
 
 if __name__ == "__main__":
-    operation = parse_command_line_arguments()
+    operation, hw_spoof = parse_command_line_arguments()
 
     if operation == "start":
         print_and_log("* starting vaccination process *", "info")
@@ -321,8 +323,9 @@ if __name__ == "__main__":
             spoof_mac_addresses()
             create_paths_and_run_processes()
             create_services()
-            spoof_dmidecode()
-            spoof_lscpu()
+            if hw_spoof:
+                spoof_dmidecode()
+                spoof_lscpu()
             print_and_log("* finished vaccination process *", "info")
         except Exception, e:
             print_and_log("* Error occurred: " + str(e) + " *", "error")
