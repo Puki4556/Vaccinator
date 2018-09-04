@@ -261,6 +261,10 @@ def kill_processes():
 def spoof_dmidecode():
     try:
         print_and_log("* trying to replace dmidecode *", "info")
+        if os.path.exists("/usr/sbin/dmidecode_org"):
+            print_and_log("* spoofed dmidecode already exists! *", "info")
+            return
+
         os.system("mv /usr/sbin/dmidecode /usr/sbin/dmidecode_org")
         if os.path.exists("/usr/sbin/dmidecode_org"):
             if arch == "32bit":
@@ -287,12 +291,15 @@ def revert_to_original_dmidecode():
 def spoof_lscpu():
     try:
         print_and_log("* trying to replace lscpu *", "info")
-        os.system("mv /usr/sbin/lscpu /usr/sbin/lscpu_org")
-        if os.path.exists("/usr/sbin/lscpu_org"):
+        if os.path.exists("/usr/bin/lscpu_org"):
+            print_and_log("* spoofed lscpu already exists! *", "info")
+            return
+        os.system("mv /usr/bin/lscpu /usr/bin/lscpu_org")
+        if os.path.exists("/usr/bin/lscpu_org"):
             if arch == "32bit":
-                shutil.copy(bin_dir + os.sep + "lscpu_32", "/usr/sbin/lscpu")
+                shutil.copy(bin_dir + os.sep + "lscpu_32", "/usr/bin/lscpu")
             else:
-                shutil.copy(bin_dir + os.sep + "lscpu_64", "/usr/sbin/lscpu")
+                shutil.copy(bin_dir + os.sep + "lscpu_64", "/usr/bin/lscpu")
 
         print_and_log("* lscpu was replaced successfully *", "info")
     except Exception, e:
@@ -303,8 +310,8 @@ def spoof_lscpu():
 def revert_to_original_lscpu():
     try:
         print_and_log("* trying to revert back to original lscpu *", "info")
-        if os.path.exists("/usr/sbin/lscpu_org"):
-            os.system("mv /usr/sbin/lscpu_org /usr/sbin/lscpu")
+        if os.path.exists("/usr/bin/lscpu_org"):
+            os.system("mv /usr/bin/lscpu_org /usr/bin/lscpu")
 
         print_and_log("* lscpu was reverted to original successfully *", "info")
     except Exception, e:
@@ -318,6 +325,8 @@ if __name__ == "__main__":
 
     if operation == "start":
         print_and_log("* starting vaccination process *", "info")
+        if hw_spoof:
+            print_and_log("* running with hw_spoof flag turned on! *", "info")
         try:
             unzip_bin()
             spoof_mac_addresses()
