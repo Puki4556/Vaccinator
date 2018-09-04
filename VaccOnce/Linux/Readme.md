@@ -1,5 +1,5 @@
 
-# Linux-Vaccinator
+# Vaccinator - Linux
 <pre>
 Vaccinator for Linux systems, spoofing the system to look like a VmWare vm
 Dependencies:
