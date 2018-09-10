@@ -11,6 +11,7 @@ How to use:
 
 -s start             start the linux vaccination process
 -k kill              kill and revert the vaccination process
+-l spoof_hw          optional - spoof lscpu and dmidecode outputs to look like this machine is a vm
 
 
 Usage: python vaccinator-linux.py -s
@@ -63,6 +64,7 @@ def parse_command_line_arguments():
     parser = OptionParser("usage: %prog -s")
     parser.add_option("-s", "--start", dest="start", action="store_true", help="start the linux vaccination process")
     parser.add_option("-k", "--kill", dest="kill", action="store_true", help="kill and revert the vaccination process")
+    parser.add_option("-l", "--spoof_hw", dest="spoof_hw", action="store_true", help="optional - spoof lscpu and dmidecode outputs to look like this machine is a vm")
     (options, args) = parser.parse_args()
 
     if options.start and options.kill:
@@ -72,9 +74,9 @@ def parse_command_line_arguments():
         parser.error("You must select either -s or -k flags")
 
     if options.start:
-        return "start"
+        return "start", options.spoof_hw
     else:
-        return "kill"
+        return "kill", options.spoof_hw
 
 
 def spoof_mac_addresses():
@@ -259,6 +261,10 @@ def kill_processes():
 def spoof_dmidecode():
     try:
         print_and_log("* trying to replace dmidecode *", "info")
+        if os.path.exists("/usr/sbin/dmidecode_org"):
+            print_and_log("* spoofed dmidecode already exists! *", "info")
+            return
+
         os.system("mv /usr/sbin/dmidecode /usr/sbin/dmidecode_org")
         if os.path.exists("/usr/sbin/dmidecode_org"):
             if arch == "32bit":
@@ -285,12 +291,15 @@ def revert_to_original_dmidecode():
 def spoof_lscpu():
     try:
         print_and_log("* trying to replace lscpu *", "info")
-        os.system("mv /usr/sbin/lscpu /usr/sbin/lscpu_org")
-        if os.path.exists("/usr/sbin/lscpu_org"):
+        if os.path.exists("/usr/bin/lscpu_org"):
+            print_and_log("* spoofed lscpu already exists! *", "info")
+            return
+        os.system("mv /usr/bin/lscpu /usr/bin/lscpu_org")
+        if os.path.exists("/usr/bin/lscpu_org"):
             if arch == "32bit":
-                shutil.copy(bin_dir + os.sep + "lscpu_32", "/usr/sbin/lscpu")
+                shutil.copy(bin_dir + os.sep + "lscpu_32", "/usr/bin/lscpu")
             else:
-                shutil.copy(bin_dir + os.sep + "lscpu_64", "/usr/sbin/lscpu")
+                shutil.copy(bin_dir + os.sep + "lscpu_64", "/usr/bin/lscpu")
 
         print_and_log("* lscpu was replaced successfully *", "info")
     except Exception, e:
@@ -301,8 +310,8 @@ def spoof_lscpu():
 def revert_to_original_lscpu():
     try:
         print_and_log("* trying to revert back to original lscpu *", "info")
-        if os.path.exists("/usr/sbin/lscpu_org"):
-            os.system("mv /usr/sbin/lscpu_org /usr/sbin/lscpu")
+        if os.path.exists("/usr/bin/lscpu_org"):
+            os.system("mv /usr/bin/lscpu_org /usr/bin/lscpu")
 
         print_and_log("* lscpu was reverted to original successfully *", "info")
     except Exception, e:
@@ -312,17 +321,20 @@ def revert_to_original_lscpu():
 
 
 if __name__ == "__main__":
-    operation = parse_command_line_arguments()
+    operation, hw_spoof = parse_command_line_arguments()
 
     if operation == "start":
         print_and_log("* starting vaccination process *", "info")
+        if hw_spoof:
+            print_and_log("* running with hw_spoof flag turned on! *", "info")
         try:
             unzip_bin()
             spoof_mac_addresses()
             create_paths_and_run_processes()
             create_services()
-            spoof_dmidecode()
-            spoof_lscpu()
+            if hw_spoof:
+                spoof_dmidecode()
+                spoof_lscpu()
             print_and_log("* finished vaccination process *", "info")
         except Exception, e:
             print_and_log("* Error occurred: " + str(e) + " *", "error")
